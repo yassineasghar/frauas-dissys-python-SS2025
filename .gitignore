@@ -1,0 +1,27 @@
+# macOS sys files
+.DS_Store
+
+# pythons virtual envs
+venv/
+.env/
+.env
+
+# configs, secrets
+config.yaml
+env.yaml
+.secret
+.config
+.conf
+.creds
+
+# idea files (IDE files)
+.idea/
+
+# bytecompiled / cache files / ...
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Logs and system artifacts
+*.log
+
