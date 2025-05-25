@@ -1,10 +1,9 @@
 from datetime import datetime
-
 import zmq
 
 
-class Client:
-    ADDRESS: str = 'tcp://localhost:5555'
+class Server:
+    ADDRESS: str = 'tcp://*:5555'
     TIME_FORMAT: str = '%Y-%m-%d %H:%M:%S'
     ENCODING: str = 'utf-8'
 
@@ -14,33 +13,31 @@ class Client:
 
     def create_context_and_socket(self) -> None:
         self.context = zmq.Context()
-        self.socket = self.context.socket(zmq.REQ)
+        self.socket = self.context.socket(zmq.REP)
 
-    def connect_socket(self) -> None:
-        self.socket.connect(self.ADDRESS)
-
-    def send_message(self, message: str) -> None:
-        self.socket.send_string(message)
+    def bind_socket(self) -> None:
+        self.socket.bind(self.ADDRESS)
 
     def receive_message(self) -> str:
         message = self.socket.recv_string()
         return message
 
+    def send_message(self, message: str) -> None:
+        self.socket.send_string(message)
+
     def run(self) -> None:
         self.create_context_and_socket()
-        self.connect_socket()
+        self.bind_socket()
 
         while True:
+            request = self.receive_message()
+            print(request)
+
             now = datetime.now().strftime(self.TIME_FORMAT)
-            text = input(f"[{now}]> ")
-            if not text:
-                continue
+            reply_text = input(f'[{now}]> ')
 
-            message = f"[{now}][CLIENT]: {text}"
-            self.send_message(message)
-
-            reply = self.receive_message()
-            print(reply)
+            reply = f'[{now}][SERVER]: {reply_text}' if reply_text else ''
+            self.send_message(reply)
 
     def close(self) -> None:
         if self.socket:
@@ -50,14 +47,14 @@ class Client:
 
 
 def main() -> None:
-    client = Client()
+    server = Server()
     try:
-        client.run()
+        server.run()
     except KeyboardInterrupt:
-        print("\nClient interrupted.")
+        print('\nServer interrupted')
     finally:
-        client.close()
+        server.close()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
