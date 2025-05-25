@@ -6,7 +6,7 @@ import zmq
 
 class Publisher:
     ADDRESS: str = 'tcp://*:5555'
-    TOPIC: str = 'Xchat'
+    TOPIC: str = 'chat'
     TIME_FORMAT: str = '%Y-%m-%d %H:%M:%S'
     ENCODING: str = 'utf-8'
 

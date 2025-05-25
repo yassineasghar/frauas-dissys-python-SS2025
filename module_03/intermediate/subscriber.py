@@ -3,7 +3,7 @@ import zmq
 
 class Subscriber:
     ADDRESS: str = 'tcp://localhost:5555'
-    TOPIC: str = 'XYchat'
+    TOPIC: str = 'chat'
     ENCODING: str = 'utf-8'
 
     def __init__(self) -> None:
