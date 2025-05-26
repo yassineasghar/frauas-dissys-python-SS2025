@@ -1,4 +1,5 @@
 from datetime import datetime
+
 import zmq
 
 
@@ -10,13 +11,21 @@ class Server:
     def __init__(self) -> None:
         self.context: zmq.Context | None = None
         self.socket: zmq.Socket | None = None
+        self.initialize()
 
-    def create_context_and_socket(self) -> None:
+    def initialize(self) -> None:
+        self.create_context()
+        self.create_socket()
+        self.bind_socket()
+
+    def create_context(self) -> None:
         self.context = zmq.Context()
-        self.socket = self.context.socket(zmq.REP)
+
+    def create_socket(self) -> None:
+        self.socket = self.context.socket(socket_type=zmq.REP)
 
     def bind_socket(self) -> None:
-        self.socket.bind(self.ADDRESS)
+        self.socket.bind(addr=self.ADDRESS)
 
     def receive_message(self) -> str:
         message = self.socket.recv_string()
@@ -26,9 +35,7 @@ class Server:
         self.socket.send_string(message)
 
     def run(self) -> None:
-        self.create_context_and_socket()
-        self.bind_socket()
-
+        print('Server started')
         while True:
             request = self.receive_message()
             print(request)

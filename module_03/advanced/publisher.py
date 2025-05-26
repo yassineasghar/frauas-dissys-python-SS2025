@@ -13,9 +13,6 @@ class Publisher:
     def __init__(self) -> None:
         self.context: zmq.Context | None = None
         self.socket: zmq.Socket | None = None
-        self.initialize()
-
-    def initialize(self) -> None:
         self.create_context()
         self.create_socket()
         self.bind_socket()

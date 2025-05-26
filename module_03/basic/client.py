@@ -11,9 +11,17 @@ class Client:
     def __init__(self) -> None:
         self.context: zmq.Context | None = None
         self.socket: zmq.Socket | None = None
+        self.initialize()
 
-    def create_context_and_socket(self) -> None:
+    def initialize(self) -> None:
+        self.create_context()
+        self.create_socket()
+        self.connect_socket()
+
+    def create_context(self) -> None:
         self.context = zmq.Context()
+
+    def create_socket(self) -> None:
         self.socket = self.context.socket(zmq.REQ)
 
     def connect_socket(self) -> None:
@@ -27,9 +35,7 @@ class Client:
         return message
 
     def run(self) -> None:
-        self.create_context_and_socket()
-        self.connect_socket()
-
+        print('Client started and listening')
         while True:
             now = datetime.now().strftime(self.TIME_FORMAT)
             text = input(f'[{now}]> ')
