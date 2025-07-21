@@ -51,7 +51,7 @@ class Server:
         self.socket.bind((self.host, self.port))
 
     def _listen_for_connections(self) -> None:
-        self.socket.listen()
+        self.socket.listen(backlog=5)
 
     def _accept_connection(self) -> tuple:
         return self.socket.accept()
