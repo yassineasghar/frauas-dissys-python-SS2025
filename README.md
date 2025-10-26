@@ -1,4 +1,5 @@
-Prof. Dr. Robin Mueller-Bady
-Distributed Systems 
-Sommer Semester 2025
-
+| **Module / Course** | Distributed System                                |
+|:--------------------|:--------------------------------------------------|
+| **Professor**       |  Prof. Dr. Robin Müller-Bady                      |
+| **Semester**        | SS2025                                            |
+| **University**      | Frankfurt University of Applied Sciences (FRAUAS) |
